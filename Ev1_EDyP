@@ -1,1 +1,85 @@
+#Parte de Yislehin Yelenia
+import datetime as dt
+
+folio= 0
+registros = {}
+
+def main():
+  print("                                   Bienvenido al sistema      ")
+
+  #Un Ciclo para validar las opciones y que el codigo se siga repitiendo hasta que el usario decida salir
+  while True:
+      print("_"*90)                 
+      print("                                   Que desea realizar?")
+      print("_"*90) 
+      opcion=input("[A]Registrar una nota - [B]Consultas y Reportes -[C]Cancelar una nota -[D]Recuperar una nota- [S]Salir: ")
+      if opcion.upper() not in ["A", "B", "C", "D", "S"]:
+            print(" Error, ese carácter no se puede ingresar de momento. Intenta de nuevo.")
+            continue
+
+      if (opcion.upper()=="A"):
+        RegistrarNota()
+        continue
+
+      if (opcion.upper()=="B"):
+          
+          continue
+      
+      if (opcion.upper()=="C"):
+          
+          continue
+      
+      if (opcion.upper()=="D"):
+         
+          continue
+        
+      if (opcion.upper()=="S"):
+       break
+      
+
+def RegistrarNota():
+    global folio
+    folio=folio + 1
+    fecha_actual = dt.date.today()
+    fecha_actual = fecha_actual.strftime("%d/%m/%Y")
+    cliente = input("Captura el nombre del cliente: ")
+    monto = 0
+    servicios = []
+
+    while True:
+        print("1. Afinacion menor - 310.00")
+        print("2. Ajuste de frenos - 540.00")
+        print("3. Cambio de Aceite - 220.00")
+        print("4. Reparacion de Llantas - 350.00")
+        print("5. Mantenimiento General - 899.99")
+        print("6. Salir")
+
+        opcion = input("Seleccione el servicio a realizar: ")
+
+        if opcion == "1":
+            monto += 310.00
+            servicios.append("Afinacion menor")
+        elif opcion == "2":
+            monto += 540.00
+            servicios.append("Ajuste de frenos")
+        elif opcion == "3":
+            monto += 220.00
+            servicios.append("Cambio de Aceite")
+        elif opcion == "4":
+            monto += 350.00
+            servicios.append("Reparacion de Llantas")
+        elif opcion == "5":
+            monto += 899.99
+            servicios.append("Mantenimiento General")
+        elif opcion == "6":
+            break
+
+    registros[folio] = (cliente, fecha_actual, servicios, monto)
+   
+    
+    #testeo para mostrar los datos
+    print(f"Folio: {folio}, Cliente: {cliente}, Fecha: {fecha_actual}, Servicios: {servicios}, Monto: {monto}")
+    
+main()
+---------------------
 

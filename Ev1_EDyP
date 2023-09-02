@@ -14,16 +14,16 @@ def main():
       print("_"*90) 
       opcion=input("[A]Registrar una nota - [B]Consultas y Reportes -[C]Cancelar una nota -[D]Recuperar una nota- [S]Salir: ")
       if opcion.upper() not in ["A", "B", "C", "D", "S"]:
-            print(" Error, ese carácter no se puede ingresar de momento. Intenta de nuevo.")
-            continue
+        print(" Error, ese carácter no se puede ingresar de momento. Intenta de nuevo.")
+        continue
 
       if (opcion.upper()=="A"):
         RegistrarNota()
         continue
 
       if (opcion.upper()=="B"):
-          
-          continue
+        ConsultarNota()
+        continue
       
       if (opcion.upper()=="C"):
           
@@ -80,6 +80,73 @@ def RegistrarNota():
     #testeo para mostrar los datos
     print(f"Folio: {folio}, Cliente: {cliente}, Fecha: {fecha_actual}, Servicios: {servicios}, Monto: {monto}")
     
+
+def ConsultarNota():
+    #Parte de Angel
+    #Usamos un def dentro de otro def, para consultar ambas notas por folio y por periodo
+    def ConsultarNotaPorFolio():
+        folio_buscar = int(input("Ingrese el folio de la nota que desea consultar: "))
+        if folio_buscar in registros:
+            #Si el folio existe en el diccionario, esta línea hace unpacking a los valores asociados con ese folio en el diccionario
+            cliente, fecha, servicios, monto = registros[folio_buscar]
+            print(f"Folio: {folio_buscar}, Cliente: {cliente}, Fecha: {fecha}, Monto: {monto}")
+            print("Detalle de servicios:")
+            #Inciamos con un bucle (for) que itera a través de la lista de servicios asociados con la nota
+            for i, servicio in enumerate(servicios, start=1):
+                print(f"{i}. {servicio}")
+            print(f"Total a pagar: {monto}")
+        else:
+            print("La nota con ese folio no existe, intente nuevamente.")
+
+    def ConsultarNotasPorPeriodo():
+        fecha_formato = "%d/%m/%Y"
+
+        # Solicitamos fechas al usuario para luego convertirlas a objetos datetime
+        fecha_inicial_str = input("Ingrese la fecha inicial (DD/MM/AAAA): ")
+        fecha_final_str = input("Ingrese la fecha final (DD/MM/AAAA): ")
+
+        # Utilizamos manejo de errores
+        try:
+            fecha_inicial = dt.datetime.strptime(fecha_inicial_str, fecha_formato)
+            fecha_final = dt.datetime.strptime(fecha_final_str, fecha_formato)                
+        except ValueError:
+            # Mandamos error si el usuario usa un formato que no es el adecuado
+            print("Formato de fecha incorrecto. Utilice el formato DD/MM/AAAA.")
+            return
+
+        # Creamos una lista que se utilizará para almacenar las notas que se encuentren dentro del período especificado.
+        notas_en_periodo = []
+
+        # Inicia un bucle for que itera a través de los elementos del diccionario
+        # Se toma la fecha como cadena de texto y se utiliza strptime para convertirla en un objeto datetime
+        for folio, (cliente, fecha_str, servicios, monto) in registros.items():
+            fecha = dt.datetime.strptime(fecha_str, fecha_formato)
+            # Luego se almacena el objeto en la variable fecha
+            # Esto convierte la fecha de la nota en un formato que se puede comparar y utilizar para determinar si está dentro del período especificado.
+            if fecha_inicial <= fecha <= fecha_final:
+                # Se compara si la fecha de la nota actual se encuentra dentro de este rango
+                 notas_en_periodo.append((folio, cliente, fecha_str, monto, servicios))
+
+        if notas_en_periodo:
+            print("Notas emitidas en el período:")
+            # Se inicia un bucle (for) que itera a través de cada tupla en la lista
+            for folio, cliente, fecha_str, monto, servicios in notas_en_periodo:
+                print(f"Folio: {folio}, Cliente: {cliente}, Fecha: {fecha_str}, Monto: {monto}")
+                print("Servicios que se realizaron:")
+                for i, servicio in enumerate(servicios, start=1):
+                    print(f"{i}. {servicio}")
+        else:
+            print("No se encontraron notas emitidas en el período especificado.")
+
+    while True:
+        subopcion = input("Seleccione una opción: \n1. Consulta por periodo\n2. Consulta por folio\n3. Volver al Menú ")
+        if subopcion == "1":
+            ConsultarNotasPorPeriodo()
+        elif subopcion == "2":
+            ConsultarNotaPorFolio()
+        elif subopcion == "3":
+            break
+
 main()
----------------------
+
 

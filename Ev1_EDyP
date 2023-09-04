@@ -155,7 +155,50 @@ def ConsultarNota():
     else:
         print("La nota con ese folio no existe.")
 
+#Parte Daniel 
+def RecuperarNota():
+    folio_recuperar = int(input("Ingrese el folio de la nota que desea recuperar: "))
+    if folio_recuperar in registros:
+        print("La nota con ese folio ya existe.")
+    else:
+        cliente = input("Captura el nombre del cliente: ")
+        fecha_actual = dt.date.today()
+        fecha_actual = fecha_actual.strftime("%d/%m/%Y")
+        monto = 0
+        servicios = []
 
-main()
+        while True:
+            print("1. Afinación menor - 310.00")
+            print("2. Ajuste de frenos - 540.00")
+            print("3. Cambio de Aceite - 220.00")
+            print("4. Reparación de Llantas - 350.00")
+            print("5. Mantenimiento General - 899.99")
+            print("6. Salir")
+
+            opcion = input("Seleccione el servicio a realizar: ")
+
+            if opcion == "1":
+                monto += 310.00
+                servicios.append("Afinación menor")
+            elif opcion == "2":
+                monto += 540.00
+                servicios.append("Ajuste de frenos")
+            elif opcion == "3":
+                monto += 220.00
+                servicios.append("Cambio de Aceite")
+            elif opcion == "4":
+                monto += 350.00
+                servicios.append("Reparación de Llantas")
+            elif opcion == "5":
+                monto += 899.99
+                servicios.append("Mantenimiento General")
+            elif opcion == "6":
+                break
+
+        registros[folio_recuperar] = (cliente, fecha_actual, servicios, monto)
+        print(f"Nota con folio {folio_recuperar} ha sido recuperada.")
+
+if __name__ == "__main__":
+    main()
 
 

@@ -10,7 +10,7 @@ def main():
   #Un Ciclo para validar las opciones y que el codigo se siga repitiendo hasta que el usario decida salir
   while True:
       print("_"*90)                 
-      print("                                   Que desea realizar?")
+      print("                                ¿Que desea realizar?")
       print("_"*90) 
       opcion=input("[A]Registrar una nota - [B]Consultas y Reportes -[C]Cancelar una nota -[D]Recuperar una nota- [S]Salir: ")
       if opcion.upper() not in ["A", "B", "C", "D", "S"]:
@@ -20,22 +20,19 @@ def main():
       if (opcion.upper()=="A"):
         RegistrarNota()
         continue
-
-      if (opcion.upper()=="B"):
+      elif (opcion.upper()=="B"):
         ConsultarNota()
         continue
-      
-      if (opcion.upper()=="C"):
+      elif (opcion.upper()=="C"):
         CancelarNota()
-          continue
-      
-      if (opcion.upper()=="D"):
-         
-          continue
-        
-      if (opcion.upper()=="S"):
-       break
-      
+        continue
+      elif (opcion.upper()=="D"):
+        RecuperarNota()        
+        continue
+      elif (opcion.upper()=="S"):
+        break
+      else:
+          print("Error, opcion no valida, Intenta de nuevo)
 
 def RegistrarNota():
     global folio
